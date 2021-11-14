@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Learn UART Communication - UART Errors and State</title>
+<!--
+Next Level CSS Template
+https://templatemo.com/tm-532-next-level
+-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/templatemo-style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row tm-brand-row">
+        <div class="col-lg-4 col-10">
+          <div class="tm-brand-container">
+            <div class="tm-brand-texts">
+              <h1 class="text-uppercase tm-brand-name">Learn UART</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 col-2 tm-nav-col">
+          <div class="tm-nav">
+            <nav class="navbar navbar-expand-lg navbar-light tm-navbar">
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto mr-0">
+                  <li class="nav-item">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="introduction.html">UART Communication</a>
+                  </li>
+                  <li class="nav-item active">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="errorandstate.html">
+                      UART Errors and State<span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="resources.html">UART Resources</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="row tm-welcome-row">
+        <div class="col-12 tm-page-cols-container">
+          <div class="tm-page-col-left tm-welcome-box tm-bg-gradient">
+            <p class="tm-welcome-text">
+              <em
+                >Illustration of some special conditions or errors present in UART</em
+              >
+            </p>
+          </div>
+          <div class="tm-page-col-right">
+            <div
+              class="tm-welcome-parallax"
+              data-parallax="scroll"
+              data-image-src="img/background.png"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <section class="row tm-pt-4 tm-pb-6">
+        <div class="col-12 tm-tabs-container tm-page-cols-container">
+          <div class="tm-page-col-left tm-tab-links">
+            <ul class="tabs clearfix" data-tabgroup="first-tab-group">
+              <li>
+                <a href="#tab1" class="active">
+                  <div class="tm-tab-icon"></div>
+                  Overrun
+                </a>
+              </li>
+              <li>
+                <a href="#tab2" class="">
+                  <div class="tm-tab-icon"></div>
+                  Underrun
+                </a>
+              </li>
+              <li>
+                <a href="#tab3" class="">
+                  <div class="tm-tab-icon"></div>
+                  Break
+                </a>
+              </li>
+              <li>
+                <a href="#tab4" class="">
+                  <div class="tm-tab-icon"></div>
+                  Parity Error
+                </a>
+              </li>
+              <li>
+                <a href="#tab5" class="">
+                  <div class="tm-tab-icon"></div>
+                  Framing
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="tm-page-col-right tm-tab-contents">
+            <div id="first-tab-group" class="tabgroup">
+              <div id="tab1">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">Overrun</h3>
+                  <p class="tm-mb-5">
+                    Overrun error happens when another incoming packet (a byte of data) reaches even before the receiving UART process the previous 
+                    packet, or in other words, not yet read finished from the receiving UART's buffer. Different devices have various amounts of buffer 
+                    space to hold the data information. The CPU controller must service the UART in order for the bits in the buffer space to be removed. 
+                    When the CPU controller missed to service the UART fast enough, resulting in a full buffer, an overrun error will occur, and further 
+                    incoming information will be lost. 
+                  </p>
+                  <img
+                        src="img/overrun.gif"
+                        alt="Image"
+                        align = "left"
+                        class="img-fluid tm-mb-1"
+                      />
+                </div>
+              </div>
+              <div id="tab2">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">Underrun</h3>
+                  <p class="tm-mb-5">
+                    Underrun error happens when data transmitted failed to reach at the required time. Output data is to be stored in a buffer usually, then 
+                    it will be fetched and processed at a predetermined time. However, if the transmit buffer is empty when the fetch function is called, 
+                    and the next packet cannot be output, underrun error will occur. 
+                  </p>
+                  <img
+                        src="img/underrun.gif"
+                        alt="Image"
+                        align = "left"
+                        class="img-fluid tm-mb-1"
+                      />
+                </div>
+              </div>
+              <div id="tab3">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">Break</h3>
+                  <p class="tm-mb-5">
+                    A "break" condition happens when the transmitting UART holds the transmitting data line at low logic state 
+                    for a long duration, i.e. more than the time needed to transmit the whole packet, when the idle state is at logic one. This could happen as well 
+                    when the speed of transmission from the transmitter is lower than what the receiver is expecting. However, such 
+                    mismatched may not necessary be an error, but as a useful way to signal the receiver to rectify the situation.
+                  </p>
+                  <img
+                        src="img/break.gif"
+                        alt="Image"
+                        align = "left"
+                        class="img-fluid tm-mb-1"
+                      />
+                </div>
+              </div>
+              <div id="tab4">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">Parity Error</h3>
+                  <p class="tm-mb-5">
+                    Parity error happens when the parity of the total number of one-bits is incorrect when compared to what the parity bit 
+                    specifies. By checking parity, transmission errors can be detected as often. This could possibly caused by data corruption, 
+                    bits being flipped during transmission, wrong baud rates between UARTs, etc. Note that it is optional to use a parity bit, 
+                    thus parity error will only happen when it is enabled. 
+                  </p>
+                  <img
+                        src="img/parity.gif"
+                        alt="Image"
+                        align = "left"
+                        class="img-fluid tm-mb-1"
+                      />
+                </div>
+              </div>
+              <div id="tab5">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">Framing</h3>
+                  <p class="tm-mb-5">
+                    Framing error happens when the UART does not read a stop bit at the end of a packet or at its expected time. 
+                    As the start bit serves as an identifier of the start of a data packet, its timing is a reference for the rest of the bits. 
+                    If the transmission data line is not at its expected logic state when it anticipates the stop bit (due to the number of bits 
+                    in the data frame, as well as the number of parity bits for which its set for the UART), the UART will produce a framing 
+                    error. 
+                  </p>
+                  <img
+                        src="img/frame.gif"
+                        alt="Image"
+                        align = "left"
+                        class="img-fluid tm-mb-1"
+                      />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/parallax.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(function() {
+        // Tabs
+        $(".tabgroup > div").hide();
+        $(".tabgroup > div:first-of-type").show();
+        $(".tabs a").click(function(e) {
+          e.preventDefault();
+          var $this = $(this),
+            tabgroup = "#" + $this.parents(".tabs").data("tabgroup"),
+            others = $this
+              .closest("li")
+              .siblings()
+              .children("a"),
+            target = $this.attr("href");
+          others.removeClass("active");
+          $this.addClass("active");
+          $(tabgroup)
+            .children("div")
+            .hide();
+          $(target).show();
+
+          // Scroll to tab content (for mobile)
+          if ($(window).width() < 992) {
+            $("html, body").animate(
+              {
+                scrollTop: $("#first-tab-group").offset().top
+              },
+              200
+            );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

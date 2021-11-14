@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Learn UART Communication - UART Communication</title>
+<!--
+Next Level CSS Template
+https://templatemo.com/tm-532-next-level
+-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/templatemo-style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row tm-brand-row">
+        <div class="col-lg-4 col-10">
+          <div class="tm-brand-container">
+            <div class="tm-brand-texts">
+              <h1 class="text-uppercase tm-brand-name">Learn UART</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 col-2 tm-nav-col">
+          <div class="tm-nav">
+            <nav class="navbar navbar-expand-lg navbar-light tm-navbar">
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto mr-0">
+                  <li class="nav-item">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item active">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="introduction.html">
+                      UART Communication <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="errorandstate.html">UART Errors and State</a>
+                  </li>
+                  <li class="nav-item">
+                    <div class="tm-nav-link-highlight"></div>
+                    <a class="nav-link" href="resources.html">UART Resources</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="row tm-welcome-row">
+        <div class="col-12 tm-page-cols-container">
+          <div class="tm-page-col-left tm-welcome-box tm-bg-gradient">
+            <p class="tm-welcome-text">
+              <em
+                >Let's learn some basics of UART Communication!</em
+              >
+            </p>
+          </div>
+          <div class="tm-page-col-right">
+            <div
+              class="tm-welcome-parallax"
+              data-parallax="scroll"
+              data-image-src="img/background.png"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <section class="row tm-pt-4 tm-pb-6">
+        <div class="col-12 tm-tabs-container tm-page-cols-container">
+          <div class="tm-page-col-left tm-tab-links">
+            <ul class="tabs clearfix" data-tabgroup="first-tab-group">
+              <li>
+                <a href="#tab1" class="active">
+                  <div class="tm-tab-icon"></div>
+                  How UART Works
+                </a>
+              </li>
+              <li>
+                <a href="#tab2" class="">
+                  <div class="tm-tab-icon"></div>
+                  UART Packet
+                </a>
+              </li>
+              <li>
+                <a href="#tab3" class="">
+                  <div class="tm-tab-icon"></div>
+                  UART Transmission
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="tm-page-col-right tm-tab-contents">
+            <div id="first-tab-group" class="tabgroup">
+              <div id="tab1">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">
+                    How UART Works
+                  </h3>
+                  <p class="tm-mb-5">
+                    In a basic UART communication system, there are two UART devices directly communicating with each other.
+                    The transmitting UART will receive data from a controlled device such as a computer, and converts the parallel 
+                    data into serial form, then transmit the serial data to the receiving UART. The receiving UART will then convert 
+                    the serial data back into parallel form and send it to the end device. Only two wires are used for transmission 
+                    of data between the transmitting and receiving UART. The data will flow from the transmitting pin of one UART device to the 
+                    receiving pin of the other UART device and vice versa. 
+                  </p>
+                  <img
+                        src="img/gifmain1.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <p class="tm-mb-5">
+                    The UART interface transmit data asynchronously, which means that it does not have a clock signal to synchronize
+                    the output bits from the transmitting device to the sampling bits by the receiving device. Instead of utilising a 
+                    clock signal, the transmitting device adds extra bits called the start bit and stop bit to the packet of data that 
+                    is being transmitted. The start bit represents the beginning whereas the stop bit represents the end of the data packet.
+                    Thus, the receiving device will capture when to read the start bit.
+                  </p>
+                  <p class="tm-mb-5">
+                    When the receiving device reads a start bit, it will read the following bits at a certain frequency. We call it as the 
+                    baud rate. Baud rate is the speed in which information is being transmitted, expressed in bits per second (bps). In order to 
+                    synchronize both UART devices, they both must operate at the same baud rate. The difference in baud rate for both devices 
+                    has an acceptable range of only 10% before the timing of bits gets too far off, resulting in errors during transmitting and 
+                    receiving of data. 
+                  </p>
+                </div>
+              </div>
+
+              <div id="tab2">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">UART Packet</h3>
+                  <p class="tm-mb-5">
+                    In UART transmission, the data transferred is organized in the form of packets. Each packet contains one start bit, 
+                    five up to nine data bits which makes up the data frame, parity bit that can be or not be present, and lastly one or 
+                    two stop bits. 
+                  </p>
+                  <img
+                        src="img/uart packet.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">Start Bit</h3>
+                  <p class="tm-mb-5">
+                    It is the first bit of a one-byte UART transmission. This indicates that the data is leaving its idle state (when it is 
+                    not transmitting data), which is usually at logic high. When the transfer of data starts, the transmitting UART 
+                    pulls the transmission line from logic high to low for one clock cycle. This in turn indicates to the receiving UART that 
+                    data is going to be transmitted serially, as it detects the transition from logic high to low. Thus, it begins to read the 
+                    bits in the data frame at the frequency of the baud rate.
+                  </p>
+                  <p class="tm-mb-5">
+                    It is also called an overhead bit, which means that it helps a transmitting UART to communicate with a receiving UART between 
+                    them but does not transmit useful data.
+                  </p>
+                  <img
+                        src="img/pulse_startbit.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">Data Frame</h3>
+                  <p class="tm-mb-5">
+                    The data frame contains the actual information that will be transmitted between two UART devices. It consists of five bits up to eight 
+                    bits long if one parity bit is present. When there is no parity present, the data frame will consist up to nine bits instead. The data 
+                    is usually transmitted across starting with the least significant bit. 
+                  </p>
+                  <img
+                        src="img/pulse_dataframe.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">Parity Bit</h3>
+                  <p class="tm-mb-5">
+                    Mainly two types that exist - "odd parity" means that the bit will be at a logic high state when the data frame consists of a total of even 
+                    ones or logic high bits, and "even parity" means that the bit will be at a logic high state when the data frame consists of a total of odd 
+                    ones or logic high bits. For example, when "even parity" is activated and the data frame has three logic high bits, the parity bit becomes 
+                    logic high, so that the total number of logic high bits that is being transmitted from the transmitter device is even. The purpose for this 
+                    is ensuring that "odd parity" will always have odd number of logic high bits whereas "even parity" will always have even number of logic high bits.
+                  </p>
+                  <p class="tm-mb-5">
+                    The parity bit also acts as a function for the receiving UART to detect changes to the incoming data during transmission. We must take note that 
+                    bits can differ by several factors, as mentioned earlier, when the baud rates of both UART is not in sync, it could cause erros during transmission.
+                  </p>
+                  <img
+                        src="img/pulse_paritybit.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">Stop Bit</h3>
+                  <p class="tm-mb-5">
+                    It is the last bit of a one-byte UART transmission. This indicates the end of the data packet, when the transmitting UART drives the data transmission 
+                    line to a high voltage from a low voltage for one or up to two bits duration. It is an overhead bit as well, similar to the start bit. 
+                  </p>
+                  <img
+                        src="img/pulse_stopbit.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                </div>
+              </div>
+              <div id="tab3">
+                <div class="text-content">
+                  <h3 class="tm-text-secondary tm-mb-5">Steps of UART Transmission</h3>
+                  <h3 class="tm-text-tertiary tm-mb-5">STEP 1:</h3>
+                  <p class="tm-mb-5">
+                    The transmitting UART receives the parallel data from the controlled device to be converted in the third step.
+                  </p>
+                  <img
+                        src="img/gif 2.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">STEP 2:</h3>
+                  <p class="tm-mb-5">
+                    The transmitting UART adds the start bit, parity bit, and the stop bit to the data frame which forms a packet of data.
+                  </p>
+                  <img
+                        src="img/step2.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">STEP 3:</h3>
+                  <p class="tm-mb-5">
+                    The packet of data is converted from parallel form to serial form here and will be sent serially from the transmitting UART 
+                    to the receiving UART. The UART receives the data and samples it at a specific baud rate. 
+                  </p>
+                  <img
+                        src="img/step3.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">STEP 4:</h3>
+                  <p class="tm-mb-5">
+                    The receiving UART removes the start bit, parity bit, and the stop bit from the data frame waiting to be converted. 
+                  </p>
+                  <img
+                        src="img/step4.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                  <h3 class="tm-text-tertiary tm-mb-5">STEP 5:</h3>
+                  <p class="tm-mb-5">
+                    The receiving UART finally converts the data received from serial form to parallel form, which is transferred after to the other 
+                    controlled device from the receiving end. 
+                  </p>
+                  <img
+                        src="img/step5.gif"
+                        alt="Image"
+                        class="img-fluid tm-mb-1"
+                      />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/parallax.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(function() {
+        // Tabs
+        $(".tabgroup > div").hide();
+        $(".tabgroup > div:first-of-type").show();
+        $(".tabs a").click(function(e) {
+          e.preventDefault();
+          var $this = $(this),
+            tabgroup = "#" + $this.parents(".tabs").data("tabgroup"),
+            others = $this
+              .closest("li")
+              .siblings()
+              .children("a"),
+            target = $this.attr("href");
+          others.removeClass("active");
+          $this.addClass("active");
+          $(tabgroup)
+            .children("div")
+            .hide();
+          $(target).show();
+
+          // Scroll to tab content (for mobile)
+          if ($(window).width() < 992) {
+            $("html, body").animate(
+              {
+                scrollTop: $("#first-tab-group").offset().top
+              },
+              200
+            );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
